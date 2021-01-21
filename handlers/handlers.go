@@ -18,7 +18,7 @@ func Manejadores() {
 	/*Por cada EndPoint vamos a tener un renglón de código que permita manejar la función correspondiente*/
 	router.HandleFunc("/registro", middlew.ChequeoBD(routers.Registro)).Methods("POST")
 	router.HandleFunc("/login", middlew.ChequeoBD(routers.Login)).Methods("POST")
-	router.HandleFunc("/verperfil", middlew.ValidoJWT(routers.VerPerfil)).Methods("GET")
+	router.HandleFunc("/verperfil", middlew.ChequeoBD(middlew.ValidoJWT(routers.VerPerfil))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
