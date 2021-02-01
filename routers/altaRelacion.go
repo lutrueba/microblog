@@ -9,13 +9,17 @@ import (
 
 /*AltaRelacion - realiza el registro de la relación entre usuarios*/
 func AltaRelacion(w http.ResponseWriter, r *http.Request) {
+	// Obtengo el ID que viene como Parámetro
 	ID := r.URL.Query().Get("id")
 	if len(ID) < 1 {
 		http.Error(w, "El parámetro ID es obligatorio", http.StatusBadRequest)
 		return
 	}
+	//Definimos un modelo relación en donde guardaremos lo que vamos a grabar en la bd
 	var rel models.Relacion
+	//Colocamos como UsuarioID al que tenemos grabado en la variable glogal, que es el logueado
 	rel.UsuarioID = IDUsuario
+	//Colocamos como UsuarioRelacionID al que viene como parámetro en el query
 	rel.UsuarioRelacionID = ID
 
 	status, err := bd.InsertoRelacion(rel)
