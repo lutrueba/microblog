@@ -17,13 +17,20 @@ func ConsultoRelacion(rel models.Relacion) (bool, error) {
 	db := MongoCN.Database("microblog")
 	col := db.Collection("relacion")
 
+	/*Mapeo a bson la relación rel que viene como parámetro para
+	  buscar en la base de datos*/
 	condicion := bson.M{
 		"usuarioid":         rel.UsuarioID,
 		"usuariorelacionid": rel.UsuarioRelacionID,
 	}
+
+	//defino un modelo para contener el resultado de la consulta
 	var resultado models.Relacion
 	err := col.FindOne(ctx, condicion).Decode(&resultado)
+
+	// Imprimo por pantalla (saldrá en la terminal) el resultado de la consulta
 	fmt.Println(resultado)
+
 	if err != nil {
 		fmt.Println(err.Error())
 		return false, err
